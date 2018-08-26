@@ -32,11 +32,32 @@ class Column extends Component {
     this.setState({ text: e.target.value });
   };
 
+  handleDragOver = (e) => {
+    e.preventDefault();
+  };
+
+  handleDrop = ({ dataTransfer }) => {
+    const { socket } = this.context;
+    const { column: { id }, editCard } = this.props;
+    const card = JSON.parse(dataTransfer.getData('card'));
+
+    if (card.columnId !== id) {
+      editCard(socket, {
+        ...card,
+        columnId: id
+      });
+    }
+  }
+
   render() {
     const { column, cards, classes } = this.props;
 
     return (
-      <div className={classes.column}>
+      <div
+        className={classes.column}
+        onDragOver={this.handleDragOver}
+        onDrop={this.handleDrop}
+      >
         <div className={classes.header}>
           <Typography
             type="headline"
@@ -73,6 +94,7 @@ Column.propTypes = {
   })).isRequired,
   // Functions
   addCard: PropTypes.func.isRequired,
+  editCard: PropTypes.func.isRequired,
   addMessage: PropTypes.func.isRequired,
   // Queries
   addCardQuery: PropTypes.shape(QueryShape).isRequired,
