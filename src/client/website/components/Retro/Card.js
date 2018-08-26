@@ -88,12 +88,21 @@ class Card extends Component {
     }
   };
 
+  handleDragStart = ({ dataTransfer }) => {
+    const { card } = this.props;
+    dataTransfer.setData('card', JSON.stringify(card));
+  };
+
   render() {
     const { userId, votes, userSubmmitedVotes, card, classes, removeCard, retroStep } = this.props;
     const { isEditing, text } = this.state;
     const { socket } = this.context;
     return (
-      <MaterialCard className={classes.card}>
+      <MaterialCard
+        className={classes.card}
+        onDragStart={this.handleDragStart}
+        draggable
+      >
         <CardContent key="content">
           {isEditing ? (
             <TextField
