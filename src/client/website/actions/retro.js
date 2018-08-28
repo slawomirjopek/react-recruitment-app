@@ -22,6 +22,8 @@ export const RETRO_EDIT_IN_PROGRESS = 'RETRO_EDIT_IN_PROGRESS';
 export const RETRO_EDIT_SUCCESS = 'RETRO_EDIT_SUCCESS';
 export const RETRO_EDIT_FAILURE = 'RETRO_EDIT_FAILURE';
 
+export const RETRO_SORT = 'RETRO_SORT';
+
 
 export const setRetroIdQueryParameter = retroId => (dispatch) => {
   const query = { r: retroId };

@@ -21,6 +21,7 @@ import {
 } from '../../services/websocket/query';
 import Column from '../../containers/Retro/Column';
 import Steps from '../../containers/Retro/Steps';
+import Panel from '../../containers/Retro/Panel';
 import { initialsOf } from '../../services/utils/initials';
 
 class Retro extends Component {
@@ -61,6 +62,7 @@ class Retro extends Component {
         return (
           <div className={classes.root}>
             <Steps />
+            <Panel />
             <div className={classes.columns}>
               {columns.map(column => (
                 <Column key={column.id} column={column} />
