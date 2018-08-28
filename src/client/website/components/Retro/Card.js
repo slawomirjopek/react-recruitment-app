@@ -93,6 +93,23 @@ class Card extends Component {
     dataTransfer.setData('card', JSON.stringify(card));
   };
 
+  handleDragOver = (e) => {
+    e.preventDefault();
+  };
+
+  handleDrop = ({ dataTransfer }) => {
+    const { card: { id, columnId }, openGroupCardDialog } = this.props;
+    const card = JSON.parse(dataTransfer.getData('card'));
+    const cardsToGroup = {
+      to: this.props.card,
+      from: card
+    };
+
+    if (card.id !== id && card.columnId === columnId) {
+      openGroupCardDialog(cardsToGroup);
+    }
+  }
+
   render() {
     const { userId, votes, userSubmmitedVotes, card, classes, removeCard, retroStep } = this.props;
     const { isEditing, text } = this.state;
@@ -101,6 +118,8 @@ class Card extends Component {
       <MaterialCard
         className={classes.card}
         onDragStart={this.handleDragStart}
+        onDragOver={this.handleDragOver}
+        onDrop={this.handleDrop}
         draggable
       >
         <CardContent key="content">
@@ -185,6 +204,7 @@ Card.propTypes = {
   editCard: PropTypes.func.isRequired,
   removeCard: PropTypes.func.isRequired,
   addMessage: PropTypes.func.isRequired,
+  openGroupCardDialog: PropTypes.func.isRequired,
   // Queries
   removeCardQuery: PropTypes.shape(QueryShape).isRequired,
   editCardQuery: PropTypes.shape(QueryShape).isRequired,
