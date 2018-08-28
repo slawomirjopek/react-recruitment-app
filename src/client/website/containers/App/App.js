@@ -12,6 +12,7 @@ import { socketActions } from '../../actions/socket';
 import HeaderContent from '../Routes/HeaderContent';
 import ConnectingDialog from '../ConnectingDialog';
 import ChangeNameDialog from '../ChangeNameDialog';
+import GroupCardDialog from '../GroupCardDialog';
 import Notifications from '../../containers/Notifications';
 import LocaleProvider from '../../i18n/LocaleProvider';
 
@@ -27,6 +28,7 @@ export const AppContainer = ({ store, ...rest }) => (
               dialogChildren={[
                 <ConnectingDialog key="connectingDialog" />,
                 <ChangeNameDialog key="changeNameDialog" />,
+                <GroupCardDialog key="groupCardDialog" />,
                 <Notifications key="notifications" />
               ]}
             >
