@@ -50,7 +50,13 @@ class Column extends Component {
   }
 
   render() {
-    const { column, cards, classes } = this.props;
+    const { column, cards, classes, sort } = this.props;
+    const transformedCards = cards
+      .filter(card => column.id === card.columnId)
+      .sort((a, b) => sort && b.votes.length - a.votes.length)
+      .map(card => (
+        <Card card={card} key={card.id} />
+      ));
 
     return (
       <div
@@ -69,9 +75,7 @@ class Column extends Component {
             <PlaylistAdd className={classes.actionIcon} />
           </IconButton>
         </div>
-        {cards.filter(card => column.id === card.columnId).map(card => (
-          <Card card={card} key={card.id} />
-        ))}
+        {transformedCards}
       </div>
     );
   }
@@ -92,6 +96,7 @@ Column.propTypes = {
     columnId: PropTypes.string.isRequired,
     text: PropTypes.string.isRequired
   })).isRequired,
+  sort: PropTypes.bool.isRequired,
   // Functions
   addCard: PropTypes.func.isRequired,
   editCard: PropTypes.func.isRequired,
