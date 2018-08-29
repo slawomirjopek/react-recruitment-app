@@ -21,8 +21,10 @@ const styles = theme => ({
     fontSize: '16px',
     fontWeight: '700'
   },
-  addCardIcon: {
-    float: 'right',
+  icons: {
+    float: 'right'
+  },
+  icon: {
     width: '32px',
     height: '32px',
     transition: 'all .2s ease',
