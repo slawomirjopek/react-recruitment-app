@@ -9,6 +9,9 @@ const styles = theme => ({
     boxShadow: '0 9px 0 -2px rgba(0,0,0,0.05), 0 2px rgba(0,0,0,.1)',
     borderRadius: '4px'
   },
+  cardHighlight: {
+    backgroundColor: theme.palette.greyBlue
+  },
   cardActions: {
     height: 'auto'
   },

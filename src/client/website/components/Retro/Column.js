@@ -4,6 +4,7 @@ import { IconButton, Typography } from 'material-ui';
 import PlaylistAdd from 'material-ui-icons/PlaylistAdd';
 import Card from '../../containers/Retro/Card';
 import { QUERY_ERROR_KEY, queryFailed, QueryShape } from '../../services/websocket/query';
+import { FILTER_MIN_LENGTH } from './Panel';
 
 class Column extends Component {
   constructor(props) {
@@ -18,6 +19,15 @@ class Column extends Component {
       addMessage(nextAddCardQuery[QUERY_ERROR_KEY]);
     }
   }
+
+  getFilterConditions = (card) => {
+    const { column, filterByText } = this.props;
+
+    return {
+      column: column.id === card.columnId,
+      word: filterByText.length >= FILTER_MIN_LENGTH && card.text.includes(filterByText)
+    };
+  };
 
   addCard = () => {
     const { socket } = this.context;
@@ -47,15 +57,23 @@ class Column extends Component {
         columnId: id
       });
     }
-  }
+  };
+
+  filterCards = (card) => {
+    const { filterByText } = this.props;
+    const conditions = this.getFilterConditions(card);
+
+    return filterByText.length >= FILTER_MIN_LENGTH ?
+      conditions.column && conditions.word : conditions.column;
+  };
 
   render() {
-    const { column, cards, classes, sort } = this.props;
+    const { column, cards, classes, sortByVotes } = this.props;
     const transformedCards = cards
-      .filter(card => column.id === card.columnId)
-      .sort((a, b) => sort && b.votes.length - a.votes.length)
+      .filter(this.filterCards)
+      .sort((a, b) => sortByVotes && b.votes.length - a.votes.length)
       .map(card => (
-        <Card card={card} key={card.id} />
+        <Card card={card} key={card.id} highlight={this.getFilterConditions(card).word} />
       ));
 
     return (
@@ -96,7 +114,8 @@ Column.propTypes = {
     columnId: PropTypes.string.isRequired,
     text: PropTypes.string.isRequired
   })).isRequired,
-  sort: PropTypes.bool.isRequired,
+  sortByVotes: PropTypes.bool.isRequired,
+  filterByText: PropTypes.string.isRequired,
   // Functions
   addCard: PropTypes.func.isRequired,
   editCard: PropTypes.func.isRequired,

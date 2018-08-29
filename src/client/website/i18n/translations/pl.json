@@ -11,7 +11,8 @@
     "remaining-votes": "Pozostało głosów",
     "previous-step": "Wróć do poprzedniego etapu spotkania",
     "next-step": "Przejdź do kolejnego etapu spotkania",
-    "confirm-group-card": "Czy na pewno chcesz połączyć kartki?"
+    "confirm-group-card": "Czy na pewno chcesz połączyć kartki?",
+    "filter-cards": "Filtruj karty"
   },
   "retro-steps": {
     "write": "Zgłoś swoje spostrzeżenia",
