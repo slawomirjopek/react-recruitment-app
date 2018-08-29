@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { IconButton, Typography } from 'material-ui';
 import PlaylistAdd from 'material-ui-icons/PlaylistAdd';
+import Visibility from 'material-ui-icons/Visibility';
+import VisibilityOff from 'material-ui-icons/VisibilityOff';
 import Card from '../../containers/Retro/Card';
 import { QUERY_ERROR_KEY, queryFailed, QueryShape } from '../../services/websocket/query';
 import { FILTER_MIN_LENGTH } from './Panel';
@@ -9,7 +11,7 @@ import { FILTER_MIN_LENGTH } from './Panel';
 class Column extends Component {
   constructor(props) {
     super(props);
-    this.state = { text: '' };
+    this.state = { text: '', showCards: true };
   }
 
   componentWillReceiveProps(nextProps) {
@@ -37,6 +39,12 @@ class Column extends Component {
     addCard(socket, id, text);
     this.setState({ text: '' });
   };
+
+  toggleCards = () => {
+    const { showCards } = this.state;
+
+    this.setState({ showCards: !showCards });
+  }
 
   handleTextChange = (e) => {
     this.setState({ text: e.target.value });
@@ -69,6 +77,7 @@ class Column extends Component {
 
   render() {
     const { column, cards, classes, sortByVotes } = this.props;
+    const { showCards } = this.state;
     const transformedCards = cards
       .filter(this.filterCards)
       .sort((a, b) => sortByVotes && b.votes.length - a.votes.length)
@@ -89,11 +98,19 @@ class Column extends Component {
             onDoubleClick={this.startEditing}
           >{column.name}
           </Typography>
-          <IconButton className={classes.addCardIcon} onClick={this.addCard}>
-            <PlaylistAdd className={classes.actionIcon} />
-          </IconButton>
+          <div className={classes.icons}>
+            <IconButton className={classes.icon} onClick={this.toggleCards}>
+              {showCards ?
+                <VisibilityOff className={classes.actionIcon} /> :
+                <Visibility className={classes.actionIcon} />
+              }
+            </IconButton>
+            <IconButton className={classes.icon} onClick={this.addCard}>
+              <PlaylistAdd className={classes.actionIcon} />
+            </IconButton>
+          </div>
         </div>
-        {transformedCards}
+        {showCards && transformedCards}
       </div>
     );
   }
@@ -126,7 +143,8 @@ Column.propTypes = {
   classes: PropTypes.shape({
     column: PropTypes.string.isRequired,
     columnTitle: PropTypes.string.isRequired,
-    addCardIcon: PropTypes.string.isRequired,
+    icon: PropTypes.string.isRequired,
+    icons: PropTypes.string.isRequired,
     addCardContainer: PropTypes.string.isRequired
   }).isRequired
 };
