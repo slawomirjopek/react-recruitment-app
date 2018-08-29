@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import cn from 'classnames';
 import {
   Card as MaterialCard,
   CardActions,
@@ -111,12 +112,15 @@ class Card extends Component {
   }
 
   render() {
-    const { userId, votes, userSubmmitedVotes, card, classes, removeCard, retroStep } = this.props;
+    const {
+      userId, votes, userSubmmitedVotes, card, classes,
+      removeCard, retroStep, highlight
+    } = this.props;
     const { isEditing, text } = this.state;
     const { socket } = this.context;
     return (
       <MaterialCard
-        className={classes.card}
+        className={cn(classes.card, { [classes.cardHighlight]: highlight })}
         onDragStart={this.handleDragStart}
         onDragOver={this.handleDragOver}
         onDrop={this.handleDrop}
@@ -200,6 +204,7 @@ Card.propTypes = {
     new: PropTypes.bool,
     authors: PropTypes.arrayOf(PropTypes.object).isRequired
   }).isRequired,
+  highlight: PropTypes.bool.isRequired,
   // Functions
   editCard: PropTypes.func.isRequired,
   removeCard: PropTypes.func.isRequired,
@@ -211,6 +216,7 @@ Card.propTypes = {
   // Styles
   classes: PropTypes.shape({
     card: PropTypes.string.isRequired,
+    cardHighlight: PropTypes.string.isRequired,
     text: PropTypes.string,
     cardActions: PropTypes.string.isRequired,
     expander: PropTypes.string.isRequired,

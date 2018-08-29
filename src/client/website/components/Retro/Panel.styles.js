@@ -1,12 +1,20 @@
 const styles = theme => ({
   container: {
     display: 'flex',
+    padding: '0 4%',
+    marginBottom: '1%'
+  },
+  inner: {
+    display: 'flex',
     width: '100%',
     flexFlow: 'row wrap',
-    padding: '0 4%',
-    border: '1px solid #ccc',
-    marginBottom: '1%',
-    justifyContent: 'flex-end'
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    margin: '0 8px'
+  },
+  formControl: {
+    width: '100%',
+    maxWidth: '300px'
   },
   sortIcon: {
     width: '40px',
