@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import cn from 'classnames';
 import { IconButton, Typography } from 'material-ui';
 import PlaylistAdd from 'material-ui-icons/PlaylistAdd';
 import Visibility from 'material-ui-icons/Visibility';
@@ -87,7 +88,9 @@ class Column extends Component {
 
     return (
       <div
-        className={classes.column}
+        className={cn(classes.column, {
+          [classes.columnWide]: !showCards
+        })}
         onDragOver={this.handleDragOver}
         onDrop={this.handleDrop}
       >
@@ -142,6 +145,7 @@ Column.propTypes = {
   // Styles
   classes: PropTypes.shape({
     column: PropTypes.string.isRequired,
+    columnWide: PropTypes.string.isRequired,
     columnTitle: PropTypes.string.isRequired,
     icon: PropTypes.string.isRequired,
     icons: PropTypes.string.isRequired,

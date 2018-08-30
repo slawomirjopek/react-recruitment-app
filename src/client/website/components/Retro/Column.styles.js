@@ -11,6 +11,11 @@ const styles = theme => ({
     borderRadius: 3,
     padding: theme.spacing.unit
   },
+  columnWide: {
+    flexShrink: '1',
+    flexBasis: '100%',
+    order: '-1'
+  },
   header: {
     display: 'flex',
     justifyContent: 'space-between',
