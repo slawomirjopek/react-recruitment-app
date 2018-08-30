@@ -12,7 +12,8 @@
     "previous-step": "Go back to the previous step",
     "next-step": "Proceed to the next step of the meeting",
     "confirm-group-card": "Do you really want to group the cards?",
-    "filter-cards": "Filter cards"
+    "filter-cards": "Filter cards",
+    "confirm-export-data": "Export data?"
   },
   "retro-steps": {
     "write": "Write your thoughts",

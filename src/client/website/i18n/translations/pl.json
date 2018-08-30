@@ -12,7 +12,8 @@
     "previous-step": "Wróć do poprzedniego etapu spotkania",
     "next-step": "Przejdź do kolejnego etapu spotkania",
     "confirm-group-card": "Czy na pewno chcesz połączyć kartki?",
-    "filter-cards": "Filtruj karty"
+    "filter-cards": "Filtruj karty",
+    "confirm-export-data": "Eksportować dane?"
   },
   "retro-steps": {
     "write": "Zgłoś swoje spostrzeżenia",
