@@ -27,3 +27,11 @@ export const cardEdit = (socket, card) => (dispatch) => {
   socket.emit(ACTION_CARD_EDIT, card);
   dispatch({ type: CARD_EDIT_IN_PROGRESS });
 };
+
+export const cardGroup = (socket, { to, from }) => async (dispatch) => {
+  const text = `${to.text}\n\n${from.text}`;
+  const card = { ...to, text };
+
+  await dispatch(cardEdit(socket, card));
+  await dispatch(cardRemove(socket, from.id));
+};

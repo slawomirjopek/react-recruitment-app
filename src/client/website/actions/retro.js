@@ -22,6 +22,9 @@ export const RETRO_EDIT_IN_PROGRESS = 'RETRO_EDIT_IN_PROGRESS';
 export const RETRO_EDIT_SUCCESS = 'RETRO_EDIT_SUCCESS';
 export const RETRO_EDIT_FAILURE = 'RETRO_EDIT_FAILURE';
 
+export const RETRO_SORT_BY_VOTES = 'RETRO_SORT_BY_VOTES';
+export const RETRO_FILTER_BY_TEXT = 'RETRO_FILTER_BY_TEXT';
+
 
 export const setRetroIdQueryParameter = retroId => (dispatch) => {
   const query = { r: retroId };
@@ -50,3 +53,8 @@ export const retroEdit = (socket, edits) => (dispatch) => {
   socket.emit(ACTION_RETRO_EDIT, edits);
   dispatch({ type: RETRO_EDIT_IN_PROGRESS });
 };
+
+export const filterByText = (value = '') => ({
+  type: RETRO_FILTER_BY_TEXT,
+  payload: value
+});

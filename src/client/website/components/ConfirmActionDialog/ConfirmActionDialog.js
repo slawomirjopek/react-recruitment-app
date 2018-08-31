@@ -17,11 +17,17 @@ class ConfirmActionDialog extends Component {
     this.setState({ open: false });
   };
 
+  handleConfirm = () => {
+    const { onConfirm } = this.props;
+
+    onConfirm();
+    this.handleClose();
+  };
+
   render() {
     const {
       TriggeringComponent,
       textContent,
-      onConfirm,
       cancelButtonText,
       confirmButtonText
     } = this.props;
@@ -37,7 +43,7 @@ class ConfirmActionDialog extends Component {
             <Button onClick={this.handleClose} color="primary">
               {cancelButtonText || <FormattedMessage id="navigation.cancel" />}
             </Button>
-            <Button onClick={onConfirm} color="primary">
+            <Button onClick={this.handleConfirm} color="primary">
               {confirmButtonText || <FormattedMessage id="navigation.ok" />}
             </Button>
           </DialogActions>

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import cn from 'classnames';
 import {
   Card as MaterialCard,
   CardActions,
@@ -88,12 +89,43 @@ class Card extends Component {
     }
   };
 
+  handleDragStart = ({ dataTransfer }) => {
+    const { card } = this.props;
+    dataTransfer.setData('card', JSON.stringify(card));
+  };
+
+  handleDragOver = (e) => {
+    e.preventDefault();
+  };
+
+  handleDrop = ({ dataTransfer }) => {
+    const { card: { id, columnId }, openGroupCardDialog } = this.props;
+    const card = JSON.parse(dataTransfer.getData('card'));
+    const cardsToGroup = {
+      to: this.props.card,
+      from: card
+    };
+
+    if (card.id !== id && card.columnId === columnId) {
+      openGroupCardDialog(cardsToGroup);
+    }
+  }
+
   render() {
-    const { userId, votes, userSubmmitedVotes, card, classes, removeCard, retroStep } = this.props;
+    const {
+      userId, votes, userSubmmitedVotes, card, classes,
+      removeCard, retroStep, highlight
+    } = this.props;
     const { isEditing, text } = this.state;
     const { socket } = this.context;
     return (
-      <MaterialCard className={classes.card}>
+      <MaterialCard
+        className={cn(classes.card, { [classes.cardHighlight]: highlight })}
+        onDragStart={this.handleDragStart}
+        onDragOver={this.handleDragOver}
+        onDrop={this.handleDrop}
+        draggable
+      >
         <CardContent key="content">
           {isEditing ? (
             <TextField
@@ -172,16 +204,19 @@ Card.propTypes = {
     new: PropTypes.bool,
     authors: PropTypes.arrayOf(PropTypes.object).isRequired
   }).isRequired,
+  highlight: PropTypes.bool.isRequired,
   // Functions
   editCard: PropTypes.func.isRequired,
   removeCard: PropTypes.func.isRequired,
   addMessage: PropTypes.func.isRequired,
+  openGroupCardDialog: PropTypes.func.isRequired,
   // Queries
   removeCardQuery: PropTypes.shape(QueryShape).isRequired,
   editCardQuery: PropTypes.shape(QueryShape).isRequired,
   // Styles
   classes: PropTypes.shape({
     card: PropTypes.string.isRequired,
+    cardHighlight: PropTypes.string.isRequired,
     text: PropTypes.string,
     cardActions: PropTypes.string.isRequired,
     expander: PropTypes.string.isRequired,

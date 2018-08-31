@@ -11,7 +11,9 @@ import {
   RETRO_RECEIVED,
   RETRO_EDIT_FAILURE,
   RETRO_EDIT_IN_PROGRESS,
-  RETRO_EDIT_SUCCESS
+  RETRO_EDIT_SUCCESS,
+  RETRO_SORT_BY_VOTES,
+  RETRO_FILTER_BY_TEXT
 } from '../actions/retro';
 import {
   COLUMN_ADD_FAILURE,
@@ -67,6 +69,8 @@ export const CARD_REMOVE_QUERY_KEY = 'removeCard';
 export const CARD_EDIT_QUERY_KEY = 'editCard';
 export const CARD_VOTES_KEY = 'votes';
 export const STEPS_CHANGE_QUERY_KEY = 'stepChange';
+export const RETRO_SORT_BY_VOTES_KEY = 'sort';
+export const RETRO_FILTER_BY_TEXT_KEY = 'filterByText';
 
 // ------------------------------------
 // Reducer`
@@ -89,7 +93,9 @@ const initialState = {
   [CARD_ADD_QUERY_KEY]: QUERY_DEFAULT(),
   [CARD_REMOVE_QUERY_KEY]: QUERY_DEFAULT(),
   [CARD_EDIT_QUERY_KEY]: QUERY_DEFAULT(),
-  [STEPS_CHANGE_QUERY_KEY]: QUERY_DEFAULT()
+  [STEPS_CHANGE_QUERY_KEY]: QUERY_DEFAULT(),
+  [RETRO_SORT_BY_VOTES_KEY]: false,
+  [RETRO_FILTER_BY_TEXT_KEY]: ''
 };
 
 const ACTION_HANDLERS = {
@@ -286,6 +292,20 @@ const ACTION_HANDLERS = {
           return author;
         })
     }));
+    return newState;
+  },
+  [RETRO_SORT_BY_VOTES]: (state) => {
+    const newState = deepClone(state);
+
+    newState[RETRO_SORT_BY_VOTES_KEY] = !newState[RETRO_SORT_BY_VOTES_KEY];
+
+    return newState;
+  },
+  [RETRO_FILTER_BY_TEXT]: (state, { payload }) => {
+    const newState = deepClone(state);
+
+    newState[RETRO_FILTER_BY_TEXT_KEY] = payload;
+
     return newState;
   }
 };

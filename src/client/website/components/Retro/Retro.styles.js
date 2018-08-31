@@ -39,6 +39,21 @@ const styles = theme => ({
   },
   hidden: {
     display: 'none'
+  },
+  download: {
+    display: 'flex',
+    justifyContent: 'flex-end',
+    margin: '1% 4% 0',
+    padding: '0 8px'
+  },
+  downloadIcon: {
+    width: '40px',
+    height: '40px',
+    transition: 'all .2s ease',
+    color: theme.palette.midGrey,
+    '&:hover': {
+      color: theme.palette.good
+    }
   }
 });
 
